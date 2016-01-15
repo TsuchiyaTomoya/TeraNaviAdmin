@@ -20,43 +20,29 @@ import ttc.bean.UserBean;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
-public class AccountLockCommand extends AbstractCommand{
+public class AdminAuthorizationCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-			String[] targets = reqc.getParameter("target");
-            String[] endDate = reqc.getParameter("lockEnd");
-            String[] status = reqc.getParameter("status");
+			String targetId = reqc.getParameter("targetId")[0];
             
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
             
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            String now = formatter.format(cal.getTime());
-            
-            for(int i = 0;i < targets.length;i++){
-                Map params = new HashMap();
-                params.put("value",targets[i]);
-                params.put("where","where user_id=?");
-                
-                UserBean ub = (UserBean)dao.read(params);
-                
-                params.put("lockStartDate",now);
-                params.put("lockEndDate",endDate[i]);
-                params.put("userbean",ub);
-                params.put("userStatus",status[i]);
-			    dao.update(params);
-            }			
+            Map params = new HashMap();
+            params.put("userId",targetId);
+            params.put("adminFlag","1");
+
+            dao.update(params);
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-            List results = java.util.Arrays.asList(targets);
+            
             resc.setTarget("AccountLockResult");
 
             return resc;

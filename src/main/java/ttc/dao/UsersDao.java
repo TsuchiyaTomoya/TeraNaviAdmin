@@ -91,7 +91,7 @@ public class UsersDao implements AbstractDao{
             sql.append("update users set user_name=?,user_name_kana=?,sex_visible_flag=?,");
             sql.append("mail_address=?,password=?,user_header_path=?,user_icon_path=?,");
             sql.append("last_login_date=?,user_status_flag=?,user_lock_start_date=?,user_lock_end_date=?,");
-            sql.append("user_profile=? where user_id=?");
+            sql.append("user_profile=?,admin_flag=? where user_id=?");
             pst = cn.prepareStatement(new String(sql));
 
             //ユーザーの名前を変更
@@ -167,8 +167,13 @@ public class UsersDao implements AbstractDao{
                 pst.setString(12,ub.getProfile());
             }
 
+            if(map.containsKey("adminFlag")){
+                pst.setString(13,(String)map.get("adminFlag"));
+            }else{
+                pst.setString(13,(String)ub.getAdminFlag());
+            }
 
-            pst.setString(13,(String)map.get("userId"));
+            pst.setString(14,(String)map.get("userId"));
 
 
             result = pst.executeUpdate();
