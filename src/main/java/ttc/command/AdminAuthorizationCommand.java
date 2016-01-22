@@ -10,50 +10,42 @@ import ttc.exception.BusinessLogicException;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
 import ttc.bean.UserBean;
 
-public class LoginCommand extends AbstractCommand{
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+public class AdminAuthorizationCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-            String loginId=reqc.getParameter("loginId")[0];
-            String password=reqc.getParameter("password")[0];
-
-
-
-            Map params = new HashMap();
-            params.put("value",loginId);
-            params.put("where","where login_id=?");
-
-
+			String targetId = reqc.getParameter("targetId")[0];
+            
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
-            UserBean ub = (UserBean)dao.read(params);
+            
+            Map params = new HashMap();
+            params.put("userId",targetId);
+            params.put("adminFlag","1");
+
+            dao.update(params);
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
+            
+            resc.setTarget("AccountLockResult");
 
-            if(password.equals(ub.getPassword())){
-                ub.setPassword("dummy");
-                ub.setSecretAnswer("dummy");
-                resc.setResult(ub);
-                resc.setTarget("LoginResult");
-
-                return resc;
-            }else{
-                throw new BusinessLogicException("パスワードが違います",null);
-            }
-
-
-
+            return resc;
         }catch(IntegrationException e){
             throw new BusinessLogicException(e.getMessage(),e);
         }

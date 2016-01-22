@@ -10,37 +10,39 @@ import ttc.exception.BusinessLogicException;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
+import ttc.bean.UserBean;
 
-public class CreateTopicCommand extends AbstractCommand{
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+public class ShowUserCommand extends AbstractCommand{
+
+
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-            String communityId = reqc.getParameter("communityId")[0];
-            String userId = reqc.getParameter("userId")[0];
-            String topic_name = reqc.getParameter("topic_name")[0];
-            String update_date = reqc.getParameter("update_date")[0];
-            String create_date = reqc.getParameter("create_date")[0];
-
-            Map params = new HashMap();
-            params.put("communityId",communityId);
-            params.put("userId",userId);
-            params.put("topic_name",topic_name);
-            params.put("update_date",update_date);
-            params.put("create_date",create_date);
+			String keyword = reqc.getParameter("keyword")[0];
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("topic");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("usersSearch");
             AbstractDao dao = factory.getAbstractDao();
-            dao.insert(params);
+
+            Map params = new HashMap();
+            params.put("keyword",keyword);
+
+            List result = dao.readAll(params);
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-            resc.setTarget("topic");
+            resc.setResult(result);
+            resc.setTarget("ShowUserResult");
 
             return resc;
         }catch(IntegrationException e){

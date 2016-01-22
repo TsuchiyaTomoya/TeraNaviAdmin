@@ -30,11 +30,8 @@ public class UserSearchDao implements AbstractDao{
     public List readAll(Map map)throws IntegrationException{
         List result = new ArrayList();
         PreparedStatement pst = null;
-        String[] keywords = null;
-        for(int i=0;i<map.size();i++){
-            keywords[i]=(String)map.get("keyword"+i);
-        }
-
+        String keyword = (String)map.get("keyword");
+        
         try{
             Connection cn = null;
             cn = MySqlConnectionManager.getInstance().getConnection();
@@ -42,20 +39,18 @@ public class UserSearchDao implements AbstractDao{
             sql.append("select user_id,user_name,sex,user_icon_path,");
             sql.append("user_profile ");
             sql.append("from users where user_name like '%?%'");
-            for(int i=1;i<keywords.length;i++){
-                sql.append(" and");
-                sql.append(" user_name like ");
-                sql.append("'%");
-                sql.append("?");
-                sql.append("%'");
-            }
+            
+            sql.append(" and");
+            sql.append(" user_name like ");
+            sql.append("'%'");
+            sql.append("?");
+            sql.append("'%'");
+            
             sql.append(" and user_status_flag=0");
 
-            for(int i=0;i<keywords.length;i++){
-                pst.setString(i+1,keywords[i]);
-            }
-
             pst = cn.prepareStatement(new String(sql));
+
+            pst.setString(1,keyword);
 
             ResultSet rs = pst.executeQuery();
 
