@@ -11,6 +11,7 @@ import ttc.exception.BusinessLogicException;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import ttc.util.factory.AbstractDaoFactory;
@@ -27,14 +28,22 @@ public class KeyCreateCommand extends AbstractCommand{
 
 			int count = Integer.parseInt(reqc.getParameter("count")[0]);
             
-            List keys = UniqueKeyGenerator.generateKeys(count);
+            List hashs = new ArrayList();
+            List keys = new ArrayList();
+            
+            for(int i = 0;i < count;i++){
+                String key = UniqueKeyGenerator.generateKeys();
+                String hash = UniqueKeyGenerator.getHashCode(key);
+                keys.add(key);
+                hashs.add(hash);
+            }
             
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("keyCreate");
             AbstractDao dao = factory.getAbstractDao();
             
             int rCount = 0;
-            Iterator itr = keys.iterator();
+            Iterator itr = hashs.iterator();
             while(itr.hasNext()){
                 Map param = new HashMap();
                 param.put("key",itr.next());
