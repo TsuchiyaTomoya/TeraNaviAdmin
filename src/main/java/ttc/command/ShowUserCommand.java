@@ -28,16 +28,16 @@ public class ShowUserCommand extends AbstractCommand{
             RequestContext reqc = getRequestContext();
 
 			String keyword = reqc.getParameter("keyword")[0];
-            
+
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("usersSearch");
             AbstractDao dao = factory.getAbstractDao();
-            
+
             Map params = new HashMap();
             params.put("keyword",keyword);
-            
+
             List result = dao.readAll(params);
-            
+
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
