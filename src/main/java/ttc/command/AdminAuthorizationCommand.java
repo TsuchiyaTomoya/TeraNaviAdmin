@@ -30,7 +30,7 @@ public class AdminAuthorizationCommand extends AbstractCommand{
 			String targetId = reqc.getParameter("targetId")[0];
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFac tory.getFactory("users");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
 
             Map params = new HashMap();
