@@ -166,7 +166,7 @@ public class UsersDao implements AbstractDao{
             }else{
                 pst.setString(12,ub.getProfile());
             }
-
+            //管理者権限の付与
             if(map.containsKey("adminFlag")){
                 pst.setString(13,(String)map.get("adminFlag"));
             }else{
