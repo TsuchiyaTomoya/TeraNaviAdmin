@@ -55,7 +55,10 @@ public class AdminArticlePostCommand extends AbstractCommand{
 			MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-			
+            if(blog.getStatus().equals("0")){
+				throw new BusinessLogicException("ブログが開設されていません",null);
+			}
+
 
 
             MySqlConnectionManager.getInstance().beginTransaction();

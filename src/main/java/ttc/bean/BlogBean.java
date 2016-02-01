@@ -7,6 +7,7 @@ public class BlogBean implements Bean{
     private String title;
     private String explanation;
     private ArrayList articles;
+	private String status;
 
 
     /**
@@ -72,4 +73,12 @@ public class BlogBean implements Bean{
     public void setArticles(ArrayList articles) {
     	this.articles = articles;
     }
+
+	public void setStatus(String status){
+		this.status = status;
+	}
+
+	public String getStatus(){
+		return status;
+	}
 }

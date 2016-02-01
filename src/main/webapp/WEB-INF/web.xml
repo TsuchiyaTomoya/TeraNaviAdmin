@@ -36,7 +36,16 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
-    
+
+    <servlet>
+        <servlet-name>adminarticle</servlet-name>
+        <jsp-file>/WEB-INF/jsp/adminarticle.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminarticle</servlet-name>
+        <url-pattern>/adminarticle</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>KeyCreate</servlet-name>
         <jsp-file>/WEB-INF/jsp/CreateKey.jsp</jsp-file>
@@ -45,6 +54,16 @@
         <servlet-name>KeyCreate</servlet-name>
         <url-pattern>/KeyCreate</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/adminlogin</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
        <servlet-name>adminAuthorization</servlet-name>

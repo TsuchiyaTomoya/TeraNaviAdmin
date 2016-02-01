@@ -122,11 +122,11 @@ public class BlogDao implements AbstractDao{
         try{
             Connection cn = null;
             cn = MySqlConnectionManager.getInstance().getConnection();
-            String sql = "select blog_title,blog_header_path,blog_explanation from users where user_id=?";
+            String sql = "select blog_title,blog_header_path,blog_explanation,blog_status_flag from users where user_id=?";
 
             pst = cn.prepareStatement(sql);
 
-            pst.setInt(1,(Integer)map.get("userId"));
+            pst.setInt(1,Integer.parseInt((String)map.get("userId")));
 
             ResultSet rs = pst.executeQuery();
 
@@ -136,6 +136,7 @@ public class BlogDao implements AbstractDao{
             blog.setTitle(rs.getString(1));
             blog.setHeaderPath(rs.getString(2));
             blog.setExplanation(rs.getString(3));
+			blog.setStatus(rs.getString(4));
 
 
         }catch(SQLException e){
