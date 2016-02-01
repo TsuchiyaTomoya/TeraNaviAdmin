@@ -19,8 +19,9 @@ import ttc.dao.AbstractDao;
 
 import ttc.util.UniqueKeyGenerator;
 
+import ttc.util.CSVGateway;
 
-public class KeyCreateCommand extends AbstractCommand{
+public class WriteKeyCreateCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
@@ -54,10 +55,15 @@ public class KeyCreateCommand extends AbstractCommand{
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
+	    
+	    String fileName = UniqueKeyGenerator.generateKeys();
+	    
+	    CSVGateway gateway = new CSVGateway();
+	    boolean flag = gateway.write(keys, fileName);
 
-            if(count == rCount){
-                resc.setResult(keys);
-                resc.setTarget("signkeyResult");
+            if(flag){
+                resc.setResult(fileName);
+                resc.setTarget("writeSignkeyResult");
             }else{
                 Map errResult = new HashMap();
                 errResult.put("count",count-rCount);

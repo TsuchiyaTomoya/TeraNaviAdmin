@@ -1,10 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <!-- ランディングページ -->
     <!-- <welcome-file-list>
       <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
@@ -14,11 +9,14 @@
         <servlet-name>index</servlet-name>
         <jsp-file>/WEB-INF/jsp/index.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-class>ttc.DownloadServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>ttc.FrontServlet</servlet-class>
@@ -27,7 +25,6 @@
         <servlet-name>FrontServlet</servlet-name>
         <url-pattern>/front/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>ttc.ImageUploadServlet</servlet-class>
@@ -36,7 +33,6 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>KeyCreate</servlet-name>
         <jsp-file>/WEB-INF/jsp/CreateKey.jsp</jsp-file>
@@ -45,25 +41,22 @@
         <servlet-name>KeyCreate</servlet-name>
         <url-pattern>/KeyCreate</url-pattern>
     </servlet-mapping>
-
     <servlet>
-       <servlet-name>adminAuthorization</servlet-name>
-       <jsp-file>/WEB-INF/jsp/adminAuthorization.jsp</jsp-file>
+        <servlet-name>adminAuthorization</servlet-name>
+        <jsp-file>/WEB-INF/jsp/adminAuthorization.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-       <servlet-name>adminAuthorization</servlet-name>
-       <url-pattern>/adminau</url-pattern>
+        <servlet-name>adminAuthorization</servlet-name>
+        <url-pattern>/adminau</url-pattern>
     </servlet-mapping>
-
     <servlet>
-       <servlet-name>accountdelete</servlet-name>
-       <jsp-file>/WEB-INF/jsp/accountdelete.jsp</jsp-file>
+        <servlet-name>accountdelete</servlet-name>
+        <jsp-file>/WEB-INF/jsp/accountdelete.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-       <servlet-name>accountdelete</servlet-name>
-       <url-pattern>/accountdelete</url-pattern>
+        <servlet-name>accountdelete</servlet-name>
+        <url-pattern>/accountdelete</url-pattern>
     </servlet-mapping>
-
     <!-- エラーページ -->
     <!-- <error-page>
        <error-type>javax.servlet.ServletException</error-type>
@@ -73,6 +66,9 @@
        <error-code>404</error-code>
        <location>/error.jsp</location>
     </error-page> -->
-
     <!-- フィルター -->
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/Download</url-pattern>
+    </servlet-mapping>
 </web-app>
