@@ -19,6 +19,11 @@ import ttc.dao.AbstractDao;
 
 import ttc.util.UniqueKeyGenerator;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 public class KeyCreateCommand extends AbstractCommand{
 
 
@@ -26,8 +31,9 @@ public class KeyCreateCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-			int count = Integer.parseInt(reqc.getParameter("count")[0]);
+            int count = Integer.parseInt(reqc.getParameter("count")[0]);
             
+
             List hashs = new ArrayList();
             List keys = new ArrayList();
             
@@ -64,6 +70,7 @@ public class KeyCreateCommand extends AbstractCommand{
                 resc.setResult(errResult);
                 resc.setTarget("errSignKeyResult");
             }
+            
             
 
             return resc;

@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Iterator;
 
-public class FileUploadServlet extends HttpServlet{
+public class ImageUploadServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{
 		doPost(req,res);
 	}
