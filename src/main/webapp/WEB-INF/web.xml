@@ -71,4 +71,14 @@
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/Download</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+	<servlet-name>search</servlet-name>
+	<jsp-file>/WEB-INF/jsp/search.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+	<servlet-name>search</servlet-name>
+	<url-pattern>/search</url-pattern>
+    </servlet-mapping>
+	
 </web-app>
