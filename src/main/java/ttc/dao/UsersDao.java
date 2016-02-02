@@ -29,13 +29,29 @@ public class UsersDao implements AbstractDao{
         List list=new ArrayList();
         try{
             cn=MySqlConnectionManager.getInstance().getConnection();
-            String sql="select * from users where user_status_flag=?";
-            pst=cn.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer();
+
+            sql.append("select * from users ");
+
+            if(map.containsKey("join")){
+                sql.append((String)map.get("join"));
+            }
+
+            sql.append("where user_status_flag=?");
+
+            if(map.containsKey("where")){
+                sql.append((String)map.get("where"));
+            }
+
+            pst=cn.prepareStatement(new String(sql));
+
+            pst.setString(1,(String)map.get("userStatus"));
+
+            if(map.containsKey("value")){
+                pst.setString(2,(String)map.get("value"));
+            }
+
             rs=pst.executeQuery();
-
-            pst.setString(19,(String)map.get("userStatus"));
-
-
             while(rs.next()){
                 UserBean ub=new UserBean();
 
@@ -91,7 +107,7 @@ public class UsersDao implements AbstractDao{
             sql.append("update users set user_name=?,user_name_kana=?,sex_visible_flag=?,");
             sql.append("mail_address=?,password=?,user_header_path=?,user_icon_path=?,");
             sql.append("last_login_date=?,user_status_flag=?,user_lock_start_date=?,user_lock_end_date=?,");
-            sql.append("user_profile=?,admin_flag=? where user_id=?");
+            sql.append("user_profile=? where user_id=?");
             pst = cn.prepareStatement(new String(sql));
 
             //ユーザーの名前を変更
@@ -166,18 +182,14 @@ public class UsersDao implements AbstractDao{
             }else{
                 pst.setString(12,ub.getProfile());
             }
-            //管理者権限の付与
-            if(map.containsKey("adminFlag")){
-                pst.setString(13,(String)map.get("adminFlag"));
-            }else{
-                pst.setString(13,(String)ub.getAdminFlag());
-            }
 
-            pst.setString(14,(String)map.get("userId"));
+
+            pst.setInt(13,Integer.parseInt((String)map.get("userId")));
 
 
             result = pst.executeUpdate();
 
+			System.out.println("\t処理件数 : "+result);
 
         }catch(SQLException e){
             MySqlConnectionManager.getInstance().rollback();
@@ -219,7 +231,19 @@ public class UsersDao implements AbstractDao{
             pst.setString(10,(String)map.get("secretAnswer"));
             pst.setString(11,(String)map.get("adminFlag"));
 
-            count = pst.executeUpdate();
+            pst.executeUpdate();
+
+            StringBuffer idSql = new StringBuffer();
+            idSql.append("select user_id from users where login_id=?");
+            pst=cn.prepareStatement(new String(idSql));
+
+            pst.setString(1,(String)map.get("loginId"));
+
+            rs=pst.executeQuery();
+            rs.next();
+
+            count = rs.getInt(1);
+
         }catch(SQLException e){
             MySqlConnectionManager.getInstance().rollback();
             throw new IntegrationException(e.getMessage(),e);

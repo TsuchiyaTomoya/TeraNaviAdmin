@@ -30,30 +30,27 @@ public class KeyWordSearchDao implements AbstractDao{
     public List readAll(Map map)throws IntegrationException{
         List result = new ArrayList();
         PreparedStatement pst = null;
-        String[] keywords = null;
-        for(int i=0;i<map.size();i++){
-            keywords[i]=(String)map.get("keyword"+i);
-        }
+        String[] keywords = (String[])map.get("keywords");
+
 
         try{
             Connection cn = null;
             cn = MySqlConnectionManager.getInstance().getConnection();
             StringBuffer sql = new StringBuffer();
             sql.append("select user_header_path,blog_title,blog_explanation ");
-            sql.append("from users where blog_title like '%?%'");
+            sql.append("from users where blog_title like ?");
             for(int i=1;i<keywords.length;i++){
-                sql.append(" and");
-                sql.append(" blog_title like ");
-                sql.append("'%");
-                sql.append("?");
-                sql.append("%'");
-            }
 
-            for(int i=0;i<keywords.length;i++){
-                pst.setString(i+1,keywords[i]);
+                sql.append(" and blog_title like ?");
             }
 
             pst = cn.prepareStatement(new String(sql));
+
+            for(int i=0;i<keywords.length;i++){
+                pst.setString(i+1,"%"+keywords[i]+"%");
+            }
+
+            System.out.println("preSibakura");
 
             ResultSet rs = pst.executeQuery();
 
@@ -63,6 +60,7 @@ public class KeyWordSearchDao implements AbstractDao{
                 blog.setTitle(rs.getString(2));
                 blog.setExplanation(rs.getString(3));
                 result.add(blog);
+                System.out.println("sibakura");
             }
 
         }catch(SQLException e){

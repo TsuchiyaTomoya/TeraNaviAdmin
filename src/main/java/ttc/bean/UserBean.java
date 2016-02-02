@@ -26,6 +26,7 @@ public class UserBean implements Bean{
     private String profile;
     private String communityAdminFlag;
     private ArrayList directMessageList;
+	private CommunityBean community;
 
 
     /**
@@ -394,5 +395,13 @@ public class UserBean implements Bean{
 	*/
 	public void setDirectMessageList(ArrayList directMessageList) {
 		this.directMessageList = directMessageList;
+	}
+
+	public void setCommunity(CommunityBean community){
+		this.community = community;
+	}
+
+	public CommunityBean getCommunity(){
+		return community;
 	}
 }

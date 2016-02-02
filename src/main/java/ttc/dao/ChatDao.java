@@ -38,10 +38,10 @@ public class ChatDao implements AbstractDao{
 
             sql.append("select chat_id,fk_user_id,fk_topic_id,chat_body,chat_date ");
             sql.append("from chat ");
-            sql.append("where fk_user_id = ?");
+            sql.append("where fk_topic_id = ?");
 
             pst = cn.prepareStatement(new String(sql));
-            pst.setInt(2, (Integer)map.get("userId") );
+            pst.setString(1,(String)map.get("topicId"));
 
             ResultSet rs = pst.executeQuery();
 
@@ -81,7 +81,8 @@ public class ChatDao implements AbstractDao{
         try{
             cn=MySqlConnectionManager.getInstance().getConnection();
             StringBuffer sql = new StringBuffer();
-            sql.append("insert into chat(fk_user_id,fk_topic_id,chat_body,chat_date,chat_delete_flag)");
+            sql.append("insert into ");
+            sql.append("chat(fk_user_id,fk_topic_id,chat_body,chat_date,chat_delete_flag)");
             sql.append("values(?,?,?,?,?)");
             pst=cn.prepareStatement(new String(sql));
 

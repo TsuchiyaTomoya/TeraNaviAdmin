@@ -34,8 +34,8 @@ public class TopicDao implements AbstractDao{
             MySqlConnectionManager.getInstance().beginTransaction();
             StringBuffer sql = new StringBuffer();
             sql.append("insert into ");
-            sql.append("topic(fk_community_id,fk_create_user_id,topic_name, ");
-            sql.append("topic_update_date,topic_create_date) ");
+            sql.append("topics(fk_community_id,fk_create_user_id,topic_name,");
+            sql.append("topic_updatetime_date,topic_created_date) ");
             sql.append("values(?,?,?,?,?)");
 
             pst = cn.prepareStatement( new String(sql) );
@@ -43,8 +43,8 @@ public class TopicDao implements AbstractDao{
             pst.setString(1, (String)map.get("communityId"));
             pst.setString(2, (String)map.get("userId"));
             pst.setString(3, (String)map.get("topic_name"));
-            pst.setString(4, (String)map.get("topic_update_date"));
-            pst.setString(5, (String)map.get("topic_create_date"));
+            pst.setString(4, (String)map.get("update_date"));
+            pst.setString(5, (String)map.get("create_date"));
 
             result = pst.executeUpdate();
 
@@ -73,11 +73,15 @@ public class TopicDao implements AbstractDao{
         try{
             Connection cn = null;
             cn = MySqlConnectionManager.getInstance().getConnection();
-            String sql="select topic_id,fk_create_user_id,topic_name,topic_update_date,topic_create_date,users.user_name from topic inner join users on topic.create_user_id=users.user_id where fk_community_Id=?";
+            StringBuffer sql = new StringBuffer();
+			sql.append("select topic_id,fk_create_user_id,topic_name,topic_updatetime_date,");
+			sql.append("topic_created_date,users.user_name ");
+			sql.append("from topics inner join users");
+			sql.append(" on topics.fk_create_user_id=users.user_id where fk_community_Id=?");
 
-            pst.setString(1,comId);
+            pst = cn.prepareStatement(new String(sql));
 
-            pst = cn.prepareStatement(sql);
+			pst.setInt(1,Integer.parseInt(comId));
 
             ResultSet rs = pst.executeQuery();
 

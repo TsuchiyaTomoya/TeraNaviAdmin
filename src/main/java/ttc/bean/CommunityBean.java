@@ -10,8 +10,10 @@ public class CommunityBean implements Bean{
     private String headerPath;
     private String createdDate;
     private String deleteFlag;
+    private int countMember;
     private ArrayList members;
     private ArrayList topics;
+    private String createUserId;
 
 
     /**
@@ -156,5 +158,20 @@ public class CommunityBean implements Bean{
     */
     public void setTopics(ArrayList topics) {
     	this.topics = topics;
+    }
+
+    public void setCountMember(int count){
+        this.countMember=count;
+    }
+    public int getCountMember(){
+        return countMember;
+    }
+
+    public void setCreateUserId(String userId){
+        createUserId = userId;
+    }
+
+    public String getCreateUserId(){
+        return createUserId;
     }
 }

@@ -73,11 +73,11 @@ public class DirectMessageDao implements AbstractDao{
 
             sql.append("select message_id,message_body,message_date," );
             sql.append("fk_send_user_id,fk_receive_user_id ");
-            sql.append("from users ");
-            sql.append("where user_id = ?");
+            sql.append("from direct_messages ");
+            sql.append("where fk_receive_user_id=?");
 
             pst = cn.prepareStatement(new String(sql));
-            pst.setInt(4, (Integer)map.get("sendUserId") );
+            pst.setInt(1, Integer.parseInt((String)map.get("sendUserId")));
 
             ResultSet rs = pst.executeQuery();
 
@@ -119,17 +119,16 @@ public class DirectMessageDao implements AbstractDao{
             MySqlConnectionManager.getInstance().beginTransaction();
             StringBuffer sql = new StringBuffer();
             sql.append("insert into ");
-            sql.append("direct_messages(message_id,message_body,message_date, ");
+            sql.append("direct_messages(message_body,message_date, ");
             sql.append("fk_send_user_id,fk_receive_user_id) ");
-            sql.append("values(?,?,?,?,?)");
+            sql.append("values(?,?,?,?)");
 
             pst = cn.prepareStatement( new String(sql) );
 
-            pst.setString(1, (String)map.get("messageId"));
-            pst.setString(2, (String)map.get("messageBody"));
-            pst.setString(3, (String)map.get("messageDate"));
-            pst.setString(4, (String)map.get("sendUserId"));
-            pst.setString(5, (String)map.get("receiveUserId"));
+            pst.setString(1, (String)map.get("messageBody"));
+            pst.setString(2, (String)map.get("messageDate"));
+            pst.setString(3, (String)map.get("sendUserId"));
+            pst.setString(4, (String)map.get("receiveUserId"));
 
             result = pst.executeUpdate();
 
