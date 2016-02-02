@@ -57,10 +57,12 @@ public class AccountLockCommand extends AbstractCommand{
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-            List results = java.util.Arrays.asList(targets);
+            Map result = new HashMap();
+			result.put("list", java.util.Arrays.asList(targets));
+			result.put("want", "ロック");
 			
-			resc.setResult(results);
-            resc.setTarget("AccountLockResult");
+			resc.setResult(result);
+            resc.setTarget("AccountChangeResult");
 
             return resc;
         }catch(IntegrationException e){

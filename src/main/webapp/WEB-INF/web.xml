@@ -75,14 +75,7 @@
         <servlet-name>adminAuthorization</servlet-name>
         <url-pattern>/adminau</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>accountdelete</servlet-name>
-        <jsp-file>/WEB-INF/jsp/accountdelete.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>accountdelete</servlet-name>
-        <url-pattern>/accountdelete</url-pattern>
-    </servlet-mapping>
+    
     <!-- エラーページ -->
     <!-- <error-page>
        <error-type>javax.servlet.ServletException</error-type>

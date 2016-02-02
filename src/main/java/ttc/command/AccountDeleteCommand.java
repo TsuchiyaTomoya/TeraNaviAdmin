@@ -14,27 +14,43 @@ import ttc.dao.AbstractDao;
 import java.util.Map;
 import java.util.HashMap;
 
+import ttc.bean.UserBean;
+
 public class AccountDeleteCommand extends AbstractCommand{
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-            String userId = reqc.getParameter("userId")[0];
+            String[] targets = reqc.getParameter("target");
             String status="3";
 
-            Map params = new HashMap();
-            params.put("userId",userId);
-            params.put("userStatus",status);
             MySqlConnectionManager.getInstance().beginTransaction();
 
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("user");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
-            dao.update(params);
+			
+			for(int i = 0;i < targets.length;i++){
+                Map params = new HashMap();
+                params.put("value",targets[i]);
+                params.put("where","where user_id=?");
+                
+                UserBean ub = (UserBean)dao.read(params);
+                
+				params.put("userId",targets[i]);
+                params.put("userbean",ub);
+                params.put("userStatus",status);
+				dao.update(params);
+            }
+			
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-
-            resc.setTarget("accountdeleteresult");
+			Map result = new HashMap();
+			result.put("list", java.util.Arrays.asList(targets));
+			result.put("want", "削除");
+			
+			resc.setResult(result);
+            resc.setTarget("AccountChangeResult");
 
             return resc;
         }catch(IntegrationException e){

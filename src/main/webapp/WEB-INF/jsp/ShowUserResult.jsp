@@ -21,7 +21,16 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-
+	<script type="text/javascript">
+        $(function(){
+            $("#want").on("change",function(){
+                var target = $("#want option:selected").attr("value");
+				var text = $("#want option:selected").text();
+                $("#lock").attr("action","/TeraNaviAdmin/front/"+target);
+				$("#lock #sub").attr("value","対象のユーザアカウントを"+text);
+            });
+        });
+    </script>
 
 </head>
 <body>
@@ -32,23 +41,40 @@
 	
 
 		<div class="row">
-
-			<c:forEach var="item" items="${result}">
-				<c:out value="${item.userName}" /><br>
-				&nbsp;このユーザにDMを送る
-				<form action="dmsend" method="post">
-					&nbsp;&nbsp;本文:<input type="text" name="messageBody"><br>
-					<input type="hidden" name="receiveUserId" value="${item.id}">
-					<input type="submit" value="送信"><br><br>
-				</form>
-				アカウントロック
-				<input type="checkbox" name="target" value="${item.id}" form="lock">
-				<input type="hidden" name="status" value="1" form="lock">
-				終了日時<input type="date" name="lockEnd" form="lock">
-			</c:forEach>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th> </th>
+						<th>ユーザ名</th>
+						<th>DM本文</th>
+						<th>DM送信リンク</th>
+						<th>終了日時</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="item" items="${result}">
+						<tr>
+							<td><input type="checkbox" name="target" value="${item.id}" form="lock"></td>
+							<td><c:out value="${item.userName}" /></td>
+							<form action="dmsend" method="post">
+								<td><input type="text" name="messageBody"></td>>
+								<input type="hidden" name="receiveUserId" value="${item.id}">
+								<td><input type="submit" value="送信"></td>
+							</form>
+							<input type="hidden" name="status" value="1" form="lock">
+							<td><input type="date" name="lockEnd" form="lock"></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 	 
 			<form action="/TeraNaviAdmin/front/acLock" method="post" id="lock">
-				<input type="submit" value="対象のユーザアカウントをロック">
+				<select id="want">
+                   <option value="acLock" selected>ロック</option>
+                   <option value="acDelete">削除</option>
+				</select>
+				<input type="submit" id="sub" value="対象のユーザアカウントをロック">
 			</form>
 		</div><!--end row-->
     </div><!--end container-->
