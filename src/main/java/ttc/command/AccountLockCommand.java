@@ -27,7 +27,7 @@ public class AccountLockCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-	    String[] targets = reqc.getParameter("target");
+			String[] targets = reqc.getParameter("target");
             String[] endDate = reqc.getParameter("lockEnd");
             String[] status = reqc.getParameter("status");
             
@@ -46,17 +46,20 @@ public class AccountLockCommand extends AbstractCommand{
                 
                 UserBean ub = (UserBean)dao.read(params);
                 
+				params.put("userId",targets[i]);
                 params.put("lockStartDate",now);
                 params.put("lockEndDate",endDate[i]);
                 params.put("userbean",ub);
                 params.put("userStatus",status[i]);
-			    dao.update(params);
+				dao.update(params);
             }			
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
             List results = java.util.Arrays.asList(targets);
+			
+			resc.setResult(results);
             resc.setTarget("AccountLockResult");
 
             return resc;

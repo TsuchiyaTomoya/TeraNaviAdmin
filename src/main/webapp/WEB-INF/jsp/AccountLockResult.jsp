@@ -10,7 +10,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>検索結果</title>
+    <title>ロック結果</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -32,24 +32,26 @@
 	
 
 		<div class="row">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ユーザID</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="item" items="${result}">
+						<tr>
+							<td><c:out value="${item}" /></td>	
+						</tr>
+				
+					</c:forEach>					
+				</tbody>
+			</table>
 
-			<c:forEach var="item" items="${result}">
-				<c:out value="${item.userName}" /><br>
-				&nbsp;このユーザにDMを送る
-				<form action="dmsend" method="post">
-					&nbsp;&nbsp;本文:<input type="text" name="messageBody"><br>
-					<input type="hidden" name="receiveUserId" value="${item.id}">
-					<input type="submit" value="送信"><br><br>
-				</form>
-				アカウントロック
-				<input type="checkbox" name="target" value="${item.id}" form="lock">
-				<input type="hidden" name="status" value="1" form="lock">
-				終了日時<input type="date" name="lockEnd" form="lock">
-			</c:forEach>
+
+			以上のユーザをロックしました
 	 
-			<form action="/TeraNaviAdmin/front/acLock" method="post" id="lock">
-				<input type="submit" value="対象のユーザアカウントをロック">
-			</form>
+		
 		</div><!--end row-->
     </div><!--end container-->
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
