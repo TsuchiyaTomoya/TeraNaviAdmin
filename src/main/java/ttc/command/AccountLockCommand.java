@@ -27,7 +27,7 @@ public class AccountLockCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-			String[] targets = reqc.getParameter("target");
+	    String[] targets = reqc.getParameter("target");
             String[] endDate = reqc.getParameter("lockEnd");
             String[] status = reqc.getParameter("status");
             
