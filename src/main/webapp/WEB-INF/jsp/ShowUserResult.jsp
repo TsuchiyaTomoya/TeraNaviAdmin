@@ -73,6 +73,7 @@
 				<select id="want">
                    <option value="acLock" selected>ロック</option>
                    <option value="acDelete">削除</option>
+				   <option value="acAuth">権限付与</option>
 				</select>
 				<input type="submit" id="sub" value="対象のユーザアカウントをロック">
 			</form>

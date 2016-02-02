@@ -19,6 +19,7 @@ import ttc.bean.UserBean;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class AdminAuthorizationCommand extends AbstractCommand{
 
@@ -27,23 +28,38 @@ public class AdminAuthorizationCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-			String targetId = reqc.getParameter("targetId")[0];
+			String[] targets = reqc.getParameter("target");
 
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
 
-            Map params = new HashMap();
-            params.put("userId",targetId);
-            params.put("adminFlag","1");
+            List users = new ArrayList();
 
-            dao.update(params);
+            for(int i = 0;i < targets.length;i++){
+                Map params = new HashMap();
+                params.put("value",targets[i]);
+                params.put("where","where user_id=?");
+                
+                UserBean ub = (UserBean)dao.read(params);
+                
+				params.put("userId",targets[i]);
+                params.put("adminFlag","1");
+                params.put("userbean",ub);
+				dao.update(params);
+				users.add(ub.getUserName());
+            }
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
 
-            resc.setTarget("adminauresult");
+            Map result = new HashMap();
+			result.put("list", users);
+			result.put("want", "管理者権限に");
+			
+			resc.setResult(result);
+            resc.setTarget("AccountChangeResult");
 
             return resc;
         }catch(IntegrationException e){

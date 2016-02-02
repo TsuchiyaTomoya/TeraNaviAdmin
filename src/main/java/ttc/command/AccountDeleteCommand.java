@@ -1,5 +1,6 @@
 package ttc.command;
 
+import java.util.ArrayList;
 import ttc.context.RequestContext;
 import ttc.context.ResponseContext;
 
@@ -13,6 +14,7 @@ import ttc.dao.AbstractDao;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 import ttc.bean.UserBean;
 
@@ -29,6 +31,8 @@ public class AccountDeleteCommand extends AbstractCommand{
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
 			
+			List users = new ArrayList();
+			
 			for(int i = 0;i < targets.length;i++){
                 Map params = new HashMap();
                 params.put("value",targets[i]);
@@ -40,13 +44,15 @@ public class AccountDeleteCommand extends AbstractCommand{
                 params.put("userbean",ub);
                 params.put("userStatus",status);
 				dao.update(params);
+				
+				users.add(ub.getUserName());
             }
 			
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
 			Map result = new HashMap();
-			result.put("list", java.util.Arrays.asList(targets));
+			result.put("list", users);
 			result.put("want", "削除");
 			
 			resc.setResult(result);
