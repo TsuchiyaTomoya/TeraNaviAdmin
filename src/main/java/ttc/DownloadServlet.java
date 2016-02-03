@@ -15,6 +15,9 @@ import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.FileInputStream;
 
+import java.io.File;
+
+
 /**
  *
  * @author Masaki
@@ -31,39 +34,46 @@ public class DownloadServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{
-	doPost(req,res);
+		doPost(req,res);
     }
     
     public void doPost(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{
-	String fileName = req.getParameter("fileName");
+		String fileName = req.getParameter("fileName");
 	
-	OutputStream out = null;
-	InputStream in = null;
-	
-	try{
-	    res.setContentType("application/octet-stream");
-	    res.setHeader( "Content-Disposition","filename=\"SignupKeys.csv\"");
-	    in = new FileInputStream("/tmp/"+fileName+".csv");
-	    out = res.getOutputStream();
-	    byte[] buff = new byte[1024];
-	    int len = 0;
-	    while ((len = in.read(buff, 0, buff.length)) != -1) {
-		out.write(buff, 0, len);
-	    }
-	} finally {
-	    if (in != null) {
-		try {
-	            in.close();
-		} catch (IOException e) {
+		OutputStream out = null;
+		InputStream in = null;
+		
+		String fPath = "/tmp/"+fileName+".csv";
+		
+		try{
+		    res.setContentType("application/octet-stream");
+			res.setHeader( "Content-Disposition","filename=\"SignupKeys.csv\"");
+			
+			
+			in = new FileInputStream(fPath);
+			out = res.getOutputStream();
+			byte[] buff = new byte[1024];
+			int len = 0;
+			while ((len = in.read(buff, 0, buff.length)) != -1) {
+				out.write(buff, 0, len);
+			}
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+				}
+			}
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+				}
+			}
 		}
-	    }
-	    if (out != null) {
-		try {
-	            out.close();
-		} catch (IOException e) {
-		}
-	    }
-	}
+		
+		File f = new File(fPath);
+		f.delete();
     }
 
 }
