@@ -35,7 +35,21 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-
+        
+        <!-- Gmail API -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-gmail</artifactId>
+            <version>v1-rev36-1.21.0</version>
+        </dependency>
+            
+        <!-- Google OAUTH2-->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-oauth2</artifactId>
+            <version>v1-rev105-1.21.0</version>
+        </dependency>
+        
         <!-- JDBCドライバ -->
         <dependency>
             <groupId>mysql</groupId>

@@ -21,7 +21,7 @@
 </head>
 <body>
     <%-- ヘッダー部分のHTMLを読み込み --%>
-    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+    <%-- <jsp:include page="/WEB-INF/jsp/header.jsp"/> --%>
 
     <div class="container">
        <div class="row">
@@ -35,6 +35,6 @@
            </form>
        </div><!--end row-->
     </div><!--end container-->
-    <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+    <%-- <jsp:include page="/WEB-INF/jsp/footer.jsp"/> --%>
 </body>
 </html>
