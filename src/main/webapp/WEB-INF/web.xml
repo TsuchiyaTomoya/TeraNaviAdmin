@@ -99,7 +99,7 @@
         <servlet-name>UserAddServlet</servlet-name>
         <url-pattern>/UserCsv</url-pattern>
     </servlet-mapping>
-	
+
 	<servlet>
         <servlet-name>csvAdd</servlet-name>
         <jsp-file>/WEB-INF/jsp/UserAdd.jsp</jsp-file>
@@ -108,4 +108,14 @@
         <servlet-name>csvAdd</servlet-name>
         <url-pattern>/UserAdd</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>policy</servlet-name>
+        <jsp-file>/WEB-INF/jsp/policyedit.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>policy</servlet-name>
+        <url-pattern>/policyedit</url-pattern>
+    </servlet-mapping>
+
 </web-app>
