@@ -27,14 +27,14 @@ public class RuleEditCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-			String rule = reqc.getParameter("rule")[0];
+			String rulee = reqc.getParameter("rule")[0];
 
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("rule");
             AbstractDao dao = factory.getAbstractDao();
 
             Map params = new HashMap();
-            params.put("rule",rule);
+            params.put("rule",rulee);
 
             dao.insert(params);
 
