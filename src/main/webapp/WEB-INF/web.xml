@@ -118,4 +118,23 @@
         <url-pattern>/policyedit</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>rule</servlet-name>
+        <jsp-file>/WEB-INF/jsp/ruleedit.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rule</servlet-name>
+        <url-pattern>/ruleedit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>contact</servlet-name>
+        <jsp-file>/WEB-INF/jsp/showcontactlist.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contact</servlet-name>
+        <url-pattern>/contactlist</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
