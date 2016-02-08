@@ -127,4 +127,14 @@
         <url-pattern>/ruleedit</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>contact</servlet-name>
+        <jsp-file>/WEB-INF/jsp/showcontactlist.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contact</servlet-name>
+        <url-pattern>/contactlist</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
