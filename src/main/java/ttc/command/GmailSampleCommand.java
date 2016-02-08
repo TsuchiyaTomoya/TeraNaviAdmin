@@ -12,44 +12,53 @@ import ttc.util.MySqlConnectionManager;
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.util.mailer.GmailApiSample;
 
+import com.google.api.services.gmail.Gmail;
+
+
 public class GmailSampleCommand extends AbstractCommand{
     public ResponseContext execute(ResponseContext resc) throws BusinessLogicException{
             RequestContext reqc = getRequestContext();
 
-            String toUserId = reqc.getParameter("toUserId")[0];
+            // String toUserId = reqc.getParameter("toUserId")[0];
 
             Map params = new HashMap();
-            params.put("toUserId",toUserId);
-            params.put("where","user_id = ?");
+            params.put("value","1");
+            params.put("where","WHERE user_id = ?");
 
             try {
                     MySqlConnectionManager.getInstance().beginTransaction();
 
-                    AbstractDaoFactory factory = AbstractDaoFactory.getFactory("user");
+                    AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
                     AbstractDao dao = factory.getAbstractDao();
                     UserBean ub = (UserBean)dao.read(params);
 
                     MySqlConnectionManager.getInstance().closeConnection();
 
-                    String toAddress = ub.getMailAddress();
-                    //  ひとまず決め打ち
+                    //  ひとまず決め打ち。テストデータのアドレスが無効なので。
+                    String toAddress = "j5fca7pm@gmail.com";
+                    // ub.getMailAddress();
+
                     String fromAddress = "ha14304001@ga.tera-house.ac.jp";
                     //  送るメールのタイトル
                     String subject = "テストだよ";
                     // 本文
                     String bodyText = "とどけ！";
-                    
+
                     //  utilにいれたGmailApiSampleクラスのメソッドを使ってメールを送る処理
+                    // 認証されたGmailオブジェクトの取得。
+                    Gmail service = GmailApiSample.getGmailService();
+
                     // 宛先と送信元アドレスのセット、タイトルと本文のセット
-                    MimeMessage message = GmailApiSample.createEmail(toAddress, fromAddress, subject, bodyText);
-                    
-                    // 
-                        
+                    MimeMessage email = GmailApiSample.createEmail(toAddress, fromAddress, subject, bodyText);
 
-                    
+                    // メールの送信
+                    GmailApiSample.sendMessage(service, fromAddress, email);
 
+                    resc.setResult("メール送ったー");
+                    resc.setTarget("index");
         } catch (Exception e) {
             throw new BusinessLogicException(e.getMessage(),e);
         }
+        return resc;
     }
 }
