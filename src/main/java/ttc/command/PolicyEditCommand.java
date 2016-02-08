@@ -27,14 +27,14 @@ public class PolicyEditCommand extends AbstractCommand{
         try{
             RequestContext reqc = getRequestContext();
 
-			String policy = reqc.getParameter("policy")[0];
+			String poli = reqc.getParameter("policy")[0];
 
             MySqlConnectionManager.getInstance().beginTransaction();
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("policy");
             AbstractDao dao = factory.getAbstractDao();
 
             Map params = new HashMap();
-            params.put("policy",policy);
+            params.put("policy",poli);
 
             dao.insert(params);
 
