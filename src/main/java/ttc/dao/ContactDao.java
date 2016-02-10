@@ -18,7 +18,42 @@ import ttc.exception.IntegrationException;
 public class ContactDao implements AbstractDao{
 
     public Bean read(Map map)throws IntegrationException{
-        return new TopicBean();
+        ContactBean cb=new ContactBean();
+        PreparedStatement pst = null;
+        try{
+            Connection cn = null;
+            cn = MySqlConnectionManager.getInstance().getConnection();
+            String sql = "SELECT * FROM contacts where contact_id=? ";
+
+            pst = cn.prepareStatement(sql);
+            pst.setString(1,(String)map.get("conId"));
+
+
+
+            ResultSet rs = pst.executeQuery();
+
+            rs.next();
+			cb.setId(rs.getString(1));
+            cb.setUserName(rs.getString(2));
+            cb.setTitle(rs.getString(3));
+            cb.setContactBody(rs.getString(4));
+            cb.setDate(rs.getString(5));
+            cb.setAddress(rs.getString(6));
+            cb.setCategory(rs.getString(7));
+
+        }catch(SQLException e){
+            throw new IntegrationException(e.getMessage(),e);
+        }finally{
+            try{
+                if(pst!=null){
+                    pst.close();
+                }
+            }catch(SQLException e){
+                throw new IntegrationException(e.getMessage(),e);
+            }
+        }
+        return cb;
+
     }
 
     public int update(Map map)throws IntegrationException{

@@ -42,11 +42,13 @@
                        <tr>
 
                            <td class="deletable">
-
-
+                               <form action="showcon" method="post" name="showForm">
+                                    <input type="hidden" name="conId" value="${con.id}">
+                                    <input type="submit" id="showCom" value="詳細へ"></input>
+                                </form>
                            </td>
 
-                           <td><form action="front/"  </td>
+
                            <td> <c:out value="${con.userName}" /> </td>
                            <td> <c:out value="${con.title}"/> </td>
                            <td> <c:out value="${con.date}"/> </td>
