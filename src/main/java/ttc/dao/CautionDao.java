@@ -45,7 +45,7 @@ public class CautionDao implements AbstractDao{
             ResultSet rs = pst.executeQuery();
 
             sql = new StringBuffer();
-            sql.append("select user_name,user_icon_path ");
+            sql.append("select user_name,user_icon_path,mail_address ");
             sql.append("from users where user_id = ?");
 
             String uSql = new String(sql);
@@ -74,6 +74,7 @@ public class CautionDao implements AbstractDao{
                 UserBean user = new UserBean();
                 user.setUserName(rsx.getString(1));
                 user.setIconPath(rsx.getString(2));
+                user.setMailAddress(rsx.getString(3));
 
                 bean.setUserId(user);
 

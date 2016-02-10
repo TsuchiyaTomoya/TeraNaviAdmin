@@ -50,12 +50,18 @@
                             <th>
                                 警告したユーザ
                             </th>
+                            <th>
+
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
 
                     </tbody>
                 </table>
+
+            </div>
+            <div id="caution">
             </div>
 
        </div><!--end row-->
@@ -90,6 +96,8 @@
                 users.empty();
 
                 for(var i = 0;i < data.length;i++){
+                    console.log(data[i].userId.mailAddress);
+
                     users.append("<tr>");
 
                     users.append("<td>"+data[i].title+"</td>");
@@ -98,6 +106,7 @@
                     users.append("<td>"+data[i].cautionBody+"</td>");
                     users.append("<td>"+data[i].userId.userName+"</td>");
                     users.append("<td>"+data[i].cautionUserId.userName+"</td>");
+                    users.append("<td><button onclick='caution(\""+data[i].userId.mailAddress+"\");'>警告</button></td>");
 
                     users.append("</tr>");
                 }
@@ -105,6 +114,17 @@
             }
         ajax = $.ajax(ajaxSettings);
 
+    }
+
+    function caution(address){
+        console.log(address);
+        $("#caution").html("<form action='/TeraNaviAdmin/front/replyContact' method='post' id='sendForm'>");
+        $("#caution").append("<h1>警告メールフォーム</h1>");
+        $("#caution").append("<input type='hidden' form='sendForm' name='toAddress' value="+address+">");
+        $("#caution").append("件名：<input type='text' name='title' form='sendForm'>><br>");
+        $("#caution").append("本文：<input type='text' name='mess' form='sendForm'>><br>");
+        $("#caution").append("<input type='submit' value='送信' form='sendForm'>");
+        $("#caution").append("</form>");
     }
 
     </script>
