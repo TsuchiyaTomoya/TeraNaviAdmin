@@ -6,8 +6,8 @@ public class CautionBean implements Bean{
     private String title;
     private String cautionBody;
     private String reportPageUrl;
-    private String userId;
-    private String cautionUserId;
+    private UserBean userId;
+    private UserBean cautionUserId;
 
     /**
     * Returns value of id
@@ -93,7 +93,7 @@ public class CautionBean implements Bean{
     * Returns value of userId
     * @return
     */
-    public String getUserId() {
+    public UserBean getUserId() {
     	return userId;
     }
 
@@ -101,7 +101,7 @@ public class CautionBean implements Bean{
     * Sets new value of userId
     * @param
     */
-    public void setUserId(String userId) {
+    public void setUserId(UserBean userId) {
     	this.userId = userId;
     }
 
@@ -109,7 +109,7 @@ public class CautionBean implements Bean{
     * Returns value of cautionUserId
     * @return
     */
-    public String getCautionUserId() {
+    public UserBean getCautionUserId() {
     	return cautionUserId;
     }
 
@@ -117,7 +117,14 @@ public class CautionBean implements Bean{
     * Sets new value of cautionUserId
     * @param
     */
-    public void setCautionUserId(String cautionUserId) {
+    public void setCautionUserId(UserBean cautionUserId) {
     	this.cautionUserId = cautionUserId;
     }
+
+
+
+
+
+
+
 }

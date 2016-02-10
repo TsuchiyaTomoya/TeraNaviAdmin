@@ -5,40 +5,38 @@ import ttc.context.ResponseContext;
 
 import ttc.util.MySqlConnectionManager;
 
-import ttc.exception.IntegrationException;
 import ttc.exception.BusinessLogicException;
-
-import java.util.Map;
-import java.util.HashMap;
-
+import ttc.exception.IntegrationException;
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
 
+import java.util.Map;
+import java.util.HashMap;
+import ttc.bean.Bean;
+import java.util.List;
+import java.util.ArrayList;
 
-public class PolicyEditCommand extends AbstractCommand{
-
-
+public class ShowCautionCommand extends AbstractCommand{
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-			String poli = reqc.getParameter("policy")[0];
+            HashMap params = new HashMap();
+
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("policy");
-            AbstractDao dao = factory.getAbstractDao();
 
-            Map params = new HashMap();
-            params.put("policy",poli);
+            AbstractDaoFactory fact=AbstractDaoFactory.getFactory("caution");
+            AbstractDao dao= fact.getAbstractDao();
 
-            dao.insert(params);
+            List result = dao.readAll(params);
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-            resc.setResult(params);
-            resc.setTarget("policyeditresult");
+
+			resc.setResult(result);
 
             return resc;
         }catch(IntegrationException e){

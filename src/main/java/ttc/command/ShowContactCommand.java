@@ -10,35 +10,42 @@ import ttc.exception.BusinessLogicException;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
+import ttc.bean.ContactBean;
 
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
-public class PolicyEditCommand extends AbstractCommand{
+public class ShowContactCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
+
             RequestContext reqc = getRequestContext();
 
-			String poli = reqc.getParameter("policy")[0];
+            String conId=reqc.getParameter("conId")[0];
+
+
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("policy");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("contact");
             AbstractDao dao = factory.getAbstractDao();
 
             Map params = new HashMap();
-            params.put("policy",poli);
+            params.put("conId",conId);
 
-            dao.insert(params);
+            ContactBean bean=(ContactBean)dao.read(params);
 
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
 
-            resc.setResult(params);
-            resc.setTarget("policyeditresult");
+            resc.setResult(bean);
+            resc.setTarget("cotactResult");
 
             return resc;
         }catch(IntegrationException e){
