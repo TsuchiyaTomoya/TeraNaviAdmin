@@ -20,21 +20,21 @@ import ttc.bean.UserBean;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
-public class PolicyEditCommand extends AbstractCommand{
+public class RuleEditCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
         try{
             RequestContext reqc = getRequestContext();
 
-			String poli = reqc.getParameter("policy")[0];
+			String rulee = reqc.getParameter("rule")[0];
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("policy");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("rule");
             AbstractDao dao = factory.getAbstractDao();
 
             Map params = new HashMap();
-            params.put("policy",poli);
+            params.put("rule",rulee);
 
             dao.insert(params);
 
@@ -42,7 +42,7 @@ public class PolicyEditCommand extends AbstractCommand{
             MySqlConnectionManager.getInstance().closeConnection();
 
             resc.setResult(params);
-            resc.setTarget("policyeditresult");
+            resc.setTarget("ruleeditresult");
 
             return resc;
         }catch(IntegrationException e){
