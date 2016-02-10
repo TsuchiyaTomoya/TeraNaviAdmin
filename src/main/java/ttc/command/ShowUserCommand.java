@@ -15,10 +15,7 @@ import java.util.List;
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
-import ttc.bean.UserBean;
 
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
 public class ShowUserCommand extends AbstractCommand{
 
