@@ -9,7 +9,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>お問い合わせ詳細</title>
+    <title>メールを送った！</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -26,21 +26,7 @@
 
     <div class="container">
        <div class="row">
-
-           <h2>件名:${result.title}</h2>
-            <p>氏名:${result.userName}<br>
-                EmailAddress:${result.address}<br>
-                カテゴリー:${result.category}</p>
-            <p>本文:${result.contactBody}</p>
-            <h2>メールフォーム</h2>
-            <form action="replyContact" method="post">
-                <input type="hidden" name="toAddress" value="${result.address}">
-                件名：<input type="text" name="title"><br>
-                本文：<input type="text" name="mess">
-                <input type="submit" value="送信">
-            </form>
-
-
+           <h1>メールを相手に送ったぜ</h1>
 
        </div><!--end row-->
     </div><!--end container-->

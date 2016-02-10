@@ -29,16 +29,16 @@
 		<textarea id="mess"></textarea><br>
 		<button onclick="send();">送信</button>
 	</div>
-	
-	
+
+
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 	<script>
 		var ajaxSettings;
 		var ajax;
-		
+
 		var nowId;
-		
+
 		$(function(){
 
 			ajaxSettings = {
@@ -47,15 +47,15 @@
 				dataType:'json',
 				data:null,
 				success:function(data){
-					
+
 					var mail = $("#mail");
 					mail.empty();
-		
+
 					mail.append("<p>"+data+"</p>");
 				}
 			};
-			
-	
+
+
 		});
 
 		function send(){
@@ -68,13 +68,14 @@
 				title:$("#title").val(),
 				mess:$("#mess").val()
 			};
-			
+
 			ajax = $.ajax(ajaxSettings);
-			
+
 		}
-		
+
 
 	</script>
+    
 
 </body>
 </html>
