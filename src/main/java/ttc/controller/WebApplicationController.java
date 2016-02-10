@@ -16,6 +16,10 @@ import ttc.command.AbstractCommand;
 import ttc.util.CommandFactory;
 import ttc.exception.PresentationException;
 
+import com.google.gson.Gson;
+
+import java.io.PrintWriter;
+
 public class WebApplicationController implements ApplicationController{
 
 	public RequestContext getRequest(Object request)throws PresentationException{
@@ -46,29 +50,46 @@ public class WebApplicationController implements ApplicationController{
 
 		String path = reqc.getCommandPath();
 
-
-
-		if(path.equals("login") || path.equals("signup")){
-			HttpSession session = req.getSession(true);
-			session.setAttribute("loginUser",resc.getResult());
-		}else if(path.equals("logout")){
-			HttpSession session = req.getSession(true);
-			session.removeAttribute("loginUser");
-
+		boolean flag = false;
+		
+		try{
+			flag = req.getParameter("ajax").equals("true");
+		}catch(Exception e){
+			
+		}
+		
+		if(flag){
+			try{
+				res.setContentType("application/json;charset=UTF-8");
+				PrintWriter writer = res.getWriter();
+				writer.print(new Gson().toJson(resc.getResult()));
+			}catch(IOException e){
+				throw new PresentationException((e.getMessage()), e);
+			}
 		}else{
 
-			req.setAttribute("result",resc.getResult());
+			if(path.equals("login") || path.equals("signup") || path.equals("basic") || path.equals("createcomm")){
+				HttpSession session = req.getSession(true);
+				session.setAttribute("loginUser",resc.getResult());
+			}else if(path.equals("logout")){
+				HttpSession session = req.getSession(true);
+				session.removeAttribute("loginUser");
 
-		}
+			}else{
 
-		RequestDispatcher rd = req.getRequestDispatcher(resc.getTarget());
+				req.setAttribute("result",resc.getResult());
 
-		try{
-			rd.forward(req,res);
-		} catch(ServletException e){
-			throw new PresentationException(e.getMessage(), e);
-		} catch(IOException e){
-			throw new PresentationException(e.getMessage(), e);
+			}
+
+			RequestDispatcher rd = req.getRequestDispatcher(resc.getTarget());
+
+			try{
+				rd.forward(req,res);
+			} catch(ServletException e){
+				throw new PresentationException(e.getMessage(), e);
+			} catch(IOException e){
+				throw new PresentationException(e.getMessage(), e);
+			}
 		}
 	}
 }

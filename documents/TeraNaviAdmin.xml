@@ -9,6 +9,7 @@
         type="javax.sql.DataSource"
         username="TERA_NAVI"
         password="tera"
-        driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/tera_db"/>
+        driverClassName="net.sf.log4jdbc.DriverSpy"
+        url="jdbc:log4jdbc:mysql://localhost/tera_db"
+    />
 </Context>

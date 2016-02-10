@@ -31,7 +31,7 @@
                <thead>
                    <tr>
                        <th class="deletable"></th>
-                
+
                        <th>名前</th>
                        <th>タイトル</th>
                         <th>日時</th>
@@ -40,9 +40,13 @@
                <tbody>
                    <c:forEach var="con" items="${result}">
                        <tr>
+
                            <td class="deletable">
 
+
                            </td>
+
+                           <td><form action="front/"  </td>
                            <td> <c:out value="${con.userName}" /> </td>
                            <td> <c:out value="${con.title}"/> </td>
                            <td> <c:out value="${con.date}"/> </td>
