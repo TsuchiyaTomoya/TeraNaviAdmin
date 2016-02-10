@@ -136,5 +136,14 @@
         <url-pattern>/contactlist</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>caution</servlet-name>
+        <jsp-file>/WEB-INF/jsp/caution.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>caution</servlet-name>
+        <url-pattern>/showCaution</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
