@@ -30,7 +30,7 @@ public class FrontServlet extends HttpServlet{
 				app.handleResponse(reqc, resc);
 
 			}catch(PresentationException e){
-				throw new IOException(e.getMessage(),e);
+				throw new ServletException(e.getMessage(),e);
 			}
 
 
