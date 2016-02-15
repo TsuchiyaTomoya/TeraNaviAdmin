@@ -98,16 +98,12 @@ public class GMailler extends Mailler{
 			
 			return "OK";
 		}catch(AddressException e){
-			e.printStackTrace();
 			throw new BusinessLogicException(e.getMessage(),e);
 		}catch(MessagingException e){
-			e.printStackTrace();
 			throw new BusinessLogicException(e.getMessage(),e);
 		}catch(UnsupportedEncodingException e){
-			e.printStackTrace();
 			throw new BusinessLogicException(e.getMessage(),e);
 		}catch(Exception e){
-			e.printStackTrace();
 			throw new BusinessLogicException(e.getMessage(),e);
 			
 		}
